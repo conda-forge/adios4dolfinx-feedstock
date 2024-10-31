@@ -42,7 +42,7 @@ test:
     - pytest
   commands:
     - pytest -vs tests
-    - mpirun -n 2 pytest tests
+    - mpiexec -n 2 pytest --log-cli-level=debug -vvs --maxfail 4 tests
     - pip check
 
 about:
