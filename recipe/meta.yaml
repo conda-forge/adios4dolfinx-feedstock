@@ -1,5 +1,5 @@
 {% set name = "adios4dolfinx" %}
-{% set version = "0.8.2" %}
+{% set version = "0.9.0" %}
 {% set major_minor = version.rsplit(".", 1)[0] %}
 
 package:
@@ -8,7 +8,7 @@ package:
 
 source:
   url: https://github.com/jorgensd/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 00c874ed65809b2dd47c6150d693bf1c76a1e9a55ae0e96084bdf167331083e3
+  sha256: 5a72a8bc111d848b56d6eb776d7ca5963fe41e4126a3d875304224f80f15b8f6
 
 build:
   number: 0
@@ -16,12 +16,6 @@ build:
 
   # openmpi oversubscribe env
   script_env:
-    - OMPI_ALLOW_RUN_AS_ROOT=1
-    - OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
-    - OMPI_MCA_rmaps_base_oversubscribe=1
-    - OMPI_MCA_plm=isolated
-    - OMPI_MCA_btl=vader,self
-    - OMPI_MCA_btl_vader_single_copy_mechanism=none
     - MPIEXEC_TIMEOUT=400
 
   script: python -m pip install . -vv
@@ -30,9 +24,10 @@ requirements:
   host:
     - python >=3.9
     - pip
+    - setuptools
   run:
     - fenics-dolfinx {{ major_minor }}
-    - adios2 * mpi_*
+    - adios2  >=2.10.2 mpi_*
     - numpy >=1.21
     - python >=3.9
     - mpi4py
@@ -44,10 +39,11 @@ test:
   requires:
     - pip
     - ipyparallel
+    - mpich  # avoid openmpi MPIEXEC_TIMEOUT bug
     - pytest
   commands:
-    - pytest -vs tests
-    - mpirun -n 2 pytest tests
+    - pytest --log-cli-level=debug -vvs --maxfail 4 tests
+    - mpiexec -n 2 pytest --log-cli-level=debug -vvs --maxfail 4 tests
     - pip check
 
 about:
