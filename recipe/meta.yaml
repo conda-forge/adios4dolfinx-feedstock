@@ -12,7 +12,7 @@ source:
   sha256: 91a957bc967c1a3b0a454a5b8658600c38a38535c90b0c8b31bc0f52841c07fd
 
 build:
-  number: 1
+  number: 0
   noarch: python
 
   # openmpi oversubscribe env
@@ -23,14 +23,14 @@ build:
 
 requirements:
   host:
-    - python >=3.9
+    - python {{ python_min }}
     - pip
     - setuptools
   run:
     - fenics-dolfinx {{ major_minor }}
     - adios2  >=2.10.2 mpi_*
     - numpy >=1.21
-    - python >=3.9
+    - python >={{ python_min }}
     - mpi4py
 
 test:
@@ -42,6 +42,7 @@ test:
     - ipyparallel
     - mpich  # avoid openmpi MPIEXEC_TIMEOUT bug
     - pytest
+    - python {{ python_min }}
   commands:
     - pytest --log-cli-level=debug -vvs --maxfail 4 tests
     - mpiexec -n 2 pytest --log-cli-level=debug -vvs --maxfail 4 tests
