@@ -1,17 +1,18 @@
 {% set name = "adios4dolfinx" %}
-{% set version = "0.9.1.post0" %}
+{% set version = "0.9.1" %}
 {% set major_minor = version.rsplit(".", 1)[0] %}
+{% set post = ".post0" %}
 
 package:
   name: adios4dolfinx
   version: {{ version }}
 
 source:
-  url: https://github.com/jorgensd/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
+  url: https://github.com/jorgensd/{{ name }}/archive/refs/tags/v{{ version }}{{ post }}.tar.gz
   sha256: 91a957bc967c1a3b0a454a5b8658600c38a38535c90b0c8b31bc0f52841c07fd
 
 build:
-  number: 0
+  number: 1
   noarch: python
 
   # openmpi oversubscribe env
