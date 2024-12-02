@@ -1,14 +1,15 @@
 {% set name = "adios4dolfinx" %}
-{% set version = "0.9.0" %}
+{% set version = "0.9.1" %}
 {% set major_minor = version.rsplit(".", 1)[0] %}
+{% set post = ".post0" %}
 
 package:
   name: adios4dolfinx
   version: {{ version }}
 
 source:
-  url: https://github.com/jorgensd/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 5a72a8bc111d848b56d6eb776d7ca5963fe41e4126a3d875304224f80f15b8f6
+  url: https://github.com/jorgensd/{{ name }}/archive/refs/tags/v{{ version }}{{ post }}.tar.gz
+  sha256: 91a957bc967c1a3b0a454a5b8658600c38a38535c90b0c8b31bc0f52841c07fd
 
 build:
   number: 0
@@ -22,14 +23,14 @@ build:
 
 requirements:
   host:
-    - python >=3.9
+    - python {{ python_min }}
     - pip
     - setuptools
   run:
     - fenics-dolfinx {{ major_minor }}
     - adios2  >=2.10.2 mpi_*
     - numpy >=1.21
-    - python >=3.9
+    - python >={{ python_min }}
     - mpi4py
 
 test:
@@ -41,6 +42,7 @@ test:
     - ipyparallel
     - mpich  # avoid openmpi MPIEXEC_TIMEOUT bug
     - pytest
+    - python {{ python_min }}
   commands:
     - pytest --log-cli-level=debug -vvs --maxfail 4 tests
     - mpiexec -n 2 pytest --log-cli-level=debug -vvs --maxfail 4 tests
