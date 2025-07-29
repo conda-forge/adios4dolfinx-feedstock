@@ -1,7 +1,7 @@
 {% set name = "adios4dolfinx" %}
 {% set version = "0.9.4" %}
 {% set major_minor = version.rsplit(".", 1)[0] %}
-{% set post = ".post0" %}
+{% set post = "" %}
 
 package:
   name: adios4dolfinx
