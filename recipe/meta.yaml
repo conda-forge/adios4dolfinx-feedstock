@@ -1,5 +1,5 @@
 {% set name = "adios4dolfinx" %}
-{% set version = "0.9.5" %}
+{% set version = "0.9.6" %}
 {% set major_minor = version.rsplit(".", 1)[0] %}
 {% set post = "" %}
 
@@ -9,7 +9,7 @@ package:
 
 source:
   url: https://github.com/jorgensd/{{ name }}/archive/refs/tags/v{{ version }}{{ post }}.tar.gz
-  sha256: bc811fbc4ef9fd15e0ec35f9e6090ca50fd938a24662d82d608cffc04bea14e6
+  sha256: 3393eae0a46cbf76a4f8d2fb1348e49fb1863ea9cfb9108ff1984f136cf94a2e
 
 build:
   number: 0
